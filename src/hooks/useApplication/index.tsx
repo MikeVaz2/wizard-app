@@ -67,6 +67,15 @@ const initialConfig: Config = {
             { label: 'Married', value: 'married' },
           ],
         },
+        {
+          name: 'age',
+          label: 'Age',
+          value: '',
+          type: 'number',
+          min: 18,
+          max: 120,
+          required: true,
+        },
       ],
     },
   ],
@@ -80,16 +89,25 @@ export const useApplication: () => {
 } = () => {
   const storedConfig = useStorage(STORAGE_KEY);
   const [config, setConfig] = useState<Config>(storedConfig ?? initialConfig);
-
   return {
     config: config,
     update: (config: Config) => {
       setConfig(config);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+      if (config.status === 'completed') {
+        console.log('Application submitted:', config);
+      }
     },
     reset: () => {
+      console.log('Resetting application');
       localStorage.removeItem(STORAGE_KEY);
-      setConfig(initialConfig);
+      setConfig({
+        ...initialConfig,
+        steps: initialConfig.steps.map((step) => ({
+          ...step,
+          fields: step.fields.map((field) => ({ ...field })),
+        })),
+      });
     },
   };
 };

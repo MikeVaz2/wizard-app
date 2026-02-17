@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# Wizard demo app
+
+- [Problem statement](./problem.md)
+- [Solution Architecture](./architecture.md)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

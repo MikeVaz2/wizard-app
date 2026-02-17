@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
 import { FieldState, Field } from '../Field';
-import { useForm, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 export type FormState = FieldState[];
 export interface FormProps extends React.ComponentProps<'form'> {

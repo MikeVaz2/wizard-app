@@ -4,7 +4,8 @@ import { Config } from '../../hooks/useApplication';
 import { Button } from '../Button';
 import { Dialog } from '../Dialog';
 import { Form } from '../Form';
-import { useForm, FormProvider, useFormContext } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
+
 export const Wizard: React.FC<{
   open: boolean;
   config: Config;
@@ -14,7 +15,6 @@ export const Wizard: React.FC<{
 }> = ({ open, onClose, config, update, reset }) => {
   const step = config.steps[config.activeStep ?? 0];
   const methods = useForm({ mode: 'all' });
-  console.log({ config, step });
 
   function handleAction(data: any, action: string) {
     // update the field values in the config
@@ -25,6 +25,7 @@ export const Wizard: React.FC<{
       return field;
     });
 
+    // Update the steps with the new field values
     const updatedSteps = config.steps.map((s, index) => {
       if (index === (config.activeStep ?? 0)) {
         return { ...s, fields: updatedFields };
@@ -60,11 +61,29 @@ export const Wizard: React.FC<{
         break;
     }
   }
+
   return (
     <Dialog open={open} modal onClose={onClose} className="glass">
       {config.status === 'completed' && (
         <>
-          <header>Application Completed!</header>
+          <header>
+            <h2>Application Completed!</h2>
+          </header>
+          <section>
+            {config.steps.map((step) => (
+              <div key={step.name}>
+                <h3>{step.name}</h3>
+                <ul>
+                  {step.fields.map((field) => (
+                    <li key={field.name}>
+                      <strong>{field.label || field.name}:</strong>{' '}
+                      {field.value}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </section>
           <p data-role="actions">
             <Button type="button" className="glass inverse" onClick={onClose}>
               Close
@@ -73,6 +92,7 @@ export const Wizard: React.FC<{
               type="button"
               className="glossy-black-button"
               onClick={() => {
+                methods.reset();
                 reset();
               }}
             >

@@ -25,6 +25,38 @@ body {
   }
 }
 
+/* Modern Scrollbar Styles */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #b3b3b3 #f5f5f5;
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #b3b3b3;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    scrollbar-color: #444 #232323;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #444;
+  }
+  ::-webkit-scrollbar-track {
+    background: #232323;
+  }
+}
+
 body > div#root {
   grid-template-columns: 1fr;
   display: grid;

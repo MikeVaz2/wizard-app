@@ -1,5 +1,5 @@
 import './styles.css';
-import { forwardRef } from 'react';
+import { Children, forwardRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 export type FieldValidationFunction = (field: FieldState) => boolean;
@@ -53,12 +53,13 @@ export const FieldComponent: Record<
     <input {...props} ref={ref} className="glass" data-theme="inverse" />
   )),
   select: forwardRef<HTMLSelectElement>((props, ref) => (
-    <select
-      {...props}
-      ref={ref}
-      className="glass"
-      data-theme="inverse"
-    ></select>
+    <select {...props} ref={ref} className="glass" data-theme="inverse">
+      {(props as any).options?.map((option: Option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
   )),
 };
 
@@ -72,6 +73,7 @@ export function Field({ state }: { state: FieldState }) {
         <Component
           type={state.type}
           disabled={state.disabled}
+          options={state.options}
           data-invalid={!!formState.errors[state.name]}
           aria-required={state.required}
           {...register(state.name, {
