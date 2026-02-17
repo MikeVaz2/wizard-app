@@ -2,6 +2,7 @@
 
 - [Problem statement](./problem.md)
 - [Solution Architecture](./architecture.md)
+- [Demo](https://github.com/MikeVaz2/wizard-app/docs)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
