@@ -1,7 +1,41 @@
 .glass {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+  --glass-bg: rgba(255, 255, 255, 0.2);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+  --glass-color: #080808;
+}
+
+@media (prefers-color-scheme: dark) {
+  .glass {
+    --glass-bg: rgba(24, 24, 24, 0.3);
+    --glass-border: 1px solid rgba(0, 0, 0, 0.3);
+    --glass-color: #b3b3b3;
+  }
+
+  [data-theme='inverted'] {
+    --glass-bg: rgba(255, 255, 255, 0.2);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+    --glass-color: #080808;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .glass {
+    --glass-bg: rgba(255, 255, 255, 0.2);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+    --glass-color: #080808;
+  }
+  [data-theme='inverted'] {
+    --glass-bg: rgba(24, 24, 24, 0.3);
+    --glass-border: 1px solid rgba(0, 0, 0, 0.3);
+    --glass-color: #b3b3b3;
+  }
+}
+
+.glass {
+  background: var(--glass-bg);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  border: var(--glass-border);
+  color: var(--glass-color);
 }

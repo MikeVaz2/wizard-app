@@ -1,0 +1,29 @@
+input.glass,
+select.glass {
+  border-radius: 4px;
+}
+
+p:has(input),
+p:has(select) {
+  > label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+  }
+  > input,
+  > select {
+    margin-top: 4px;
+  }
+}
+
+p:has([aria-required]) > label > span::after {
+  content: '*';
+  margin-left: 0.25em;
+}
+
+p:has(:invalid),
+p:has([data-invalid='true']) {
+  > label {
+    color: rgba(255, 0, 0, 0.8);
+  }
+}
