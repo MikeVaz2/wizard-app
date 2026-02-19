@@ -1,6 +1,5 @@
 import './styles.css';
-import { Children, forwardRef } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { FieldValues, useFormContext, UseFormRegister } from 'react-hook-form';
 
 export type FieldValidationFunction = (field: FieldState) => boolean;
 
@@ -43,37 +42,44 @@ const errorsByType: Record<string, string> = {
   pattern: 'Value does not match the required pattern',
 };
 
-export const FieldComponent: Record<
-  string,
-  React.ForwardRefExoticComponent<
-    React.ComponentProps<any> & React.RefAttributes<any>
-  >
-> = {
-  text: forwardRef<HTMLInputElement>((props, ref) => (
-    <input {...props} ref={ref} className="glass" data-theme="inverse" />
-  )),
-  select: forwardRef<HTMLSelectElement>((props, ref) => (
-    <select {...props} ref={ref} className="glass" data-theme="inverse">
-      {(props as any).options?.map((option: Option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
-  )),
-};
+export const RenderComponent: React.FC<{
+  state: FieldState;
+  register: UseFormRegister<FieldValues>;
+  formState: any;
+}> = ({ state, register, formState }) => {
+  switch (state.type) {
+    case 'select':
+      return (
+        <select
+          disabled={state.disabled}
+          data-invalid={!!formState.errors[state.name]}
+          aria-required={state.required}
+          {...register(state.name, {
+            value: state.value,
+            required: state.required,
+            min: state.min,
+            max: state.max,
+            maxLength: state.maxLength,
+            minLength: state.minLength,
+            pattern: state.pattern,
+            validate: state.validate,
+          })}
+          className="glass"
+          data-theme="inverse"
+        >
+          {(state.options ?? []).map((option: Option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      );
 
-export function Field({ state }: { state: FieldState }) {
-  const { register, formState } = useFormContext();
-  const Component = FieldComponent[state.type] || FieldComponent['text'];
-  return (
-    <p>
-      <label>
-        <span>{state.label}</span>
-        <Component
+    default:
+      return (
+        <input
           type={state.type}
           disabled={state.disabled}
-          options={state.options}
           data-invalid={!!formState.errors[state.name]}
           aria-required={state.required}
           {...register(state.name, {
@@ -87,6 +93,17 @@ export function Field({ state }: { state: FieldState }) {
             validate: state.validate,
           })}
         />
+      );
+  }
+};
+
+export function Field({ state }: { state: FieldState }) {
+  const { register, formState } = useFormContext();
+  return (
+    <p>
+      <label>
+        <span>{state.label}</span>
+        {RenderComponent({ state, register, formState })}
       </label>
 
       {formState.errors[state.name] && (

@@ -17,7 +17,9 @@ const { config, update } = useApplication();
 </App>
 ```
 
-Wizard is build from a modal dialog with a form inside we can base it on `useForm` hook.
+### Wizard component
+
+Wizard could be built from a modal dialog with a form inside. `useForm` hook can be handy here.
 
 ```jsx
 <Wizard config update>
@@ -29,7 +31,7 @@ Wizard is build from a modal dialog with a form inside we can base it on `useFor
 </Wizard>
 ```
 
-Finally, each step could be a field set with sections and actions button configurable based on a step.
+Finally, each step could be a set of fields with sections and actions button configurable based on a step.
 
 ```jsx
 <Step>

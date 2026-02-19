@@ -1,4 +1,4 @@
-import react, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export interface DialogProps extends React.ComponentProps<'dialog'> {
   open: boolean;
