@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FieldState } from '../../components/Field';
 
 export interface StepConfig {
@@ -101,13 +101,7 @@ export const useApplication: () => {
     reset: () => {
       console.log('Resetting application');
       localStorage.removeItem(STORAGE_KEY);
-      setConfig({
-        ...initialConfig,
-        steps: initialConfig.steps.map((step) => ({
-          ...step,
-          fields: step.fields.map((field) => ({ ...field })),
-        })),
-      });
+      setConfig(initialConfig);
     },
   };
 };
