@@ -16,6 +16,11 @@ p:has(select) {
   }
 }
 
+option {
+  background: white;
+  color: black;
+}
+
 p:has([aria-required]) > label > span::after {
   content: '*';
   margin-left: 0.25em;
